@@ -1,0 +1,42 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card" *ngIf="!isLoading">
+    <h4 class="card-header">Account settings</h4>
+    <div class="card-body">
+        <form #accountForm="ngForm" (ngSubmit)="save(user)">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+            <i class="fa fa-user"></i>
+          </span>
+                </div>
+                <input class="form-control" type="text" name="username" [(ngModel)]="user.username" placeholder="Username" required>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+          <i class="fa fa-picture-o"></i>
+        </span>
+                </div>
+                <input class="form-control" type="file" name="image" placeholder="Image" (change)="fileProgress($event.target)" required>
+
+            </div>
+
+            <div *ngIf="fileUploadProgress">
+                Upload progress: {{ fileUploadProgress }}
+            </div>
+            <div class="image-preview mb-3" *ngIf="user.previewUrl">
+                <img [src]="user.previewUrl" height="300" />
+            </div>
+
+            <div class="mb-3" *ngIf="uploadedFilePath">
+                {{uploadedFilePath}}
+            </div>
+            <button class="btn btn-primary" type="submit" [disabled]="!accountForm.form.valid">
+        <i class="fa fa-save"></i> Save
+      </button>
+        </form>
+    </div>
+</div>
